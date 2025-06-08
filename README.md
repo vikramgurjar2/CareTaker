@@ -8,6 +8,8 @@ This web application allow users to monitor their important health parameters in
 - Chatbot - helps users to clarify their small doubts
 - User can login and register in both ways - password or google
 - History management
+- Secure the documents
+- 
 
 ## Architecture
 The project contains the following folders and services
@@ -37,7 +39,6 @@ The project contains the following folders and services
 
 3. Include *kafka.pem* file in backend and fit-band-server.
 4. make sure to install the required dependencies
-5. 
 6. Run ```npm run dev``` in all 3 services i.e. caretaker, backend, and fit-band-server (make sure to have nodmeon in both backend and fit-band-server - ```npm install --save-dev nodemon```)
 
 At this point following service would be up and running: 
