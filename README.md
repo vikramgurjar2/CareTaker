@@ -26,7 +26,7 @@ The project contains the following folders and services
 - **PostgreSQL** - PostgreSQL provides reliability, robust feature set, and strong support for complex queries and transactions, ensuring data integrity and scalability. It is used to store users and their history data.
 - **WebRTC** - WebRTC is used for video calling facility, it enables real-time, peer-to-peer communication, offering seamless, secure, and high-quality video conferencing experiences over the internet.
 
-![final](https://github.com/SayantanBong007/Caretakr/assets/94526347/44e6ab98-3ab2-46bd-bd01-0c021c00783c)
+
 
 ## Setup Guide
 1. Run ```npm install``` in all 3 services i.e. caretaker, backend, and fit-band-server.
