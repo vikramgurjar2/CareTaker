@@ -48,6 +48,5 @@ At this point following service would be up and running:
 |backend|:4000|
 |fit-band-server|-|
 
-## Demo Video and Presentation
-[Watch the demo video and ppt of Caretakr](https://drive.google.com/drive/folders/1FYEoZ9-sR0QeXFEyHyLDOCkgJj-Np3Qg) 
+
 
