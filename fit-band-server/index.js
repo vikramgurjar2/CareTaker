@@ -5,15 +5,8 @@ require("dotenv").config();
 
 const kafka = new Kafka({
   clientId: `fit-band-server`,
-  brokers: [process.env.KAFKA_BROKER],
-  ssl: {
-    ca: [fs.readFileSync(path.join(__dirname, "kafka.pem"), "utf-8")],
-  },
-  sasl: {
-    username: process.env.KAFKA_USERNAME,
-    password: process.env.KAFKA_PASSWORD,
-    mechanism: "plain",
-  },
+  brokers: [process.env.KAFKA_BROKER || "localhost:9092"],
+  // Removed ssl and sasl for local development
 });
 
 const producer = kafka.producer();
