@@ -9,3 +9,4 @@ const kafka = new Kafka({
 const consumer = kafka.consumer({ groupId: "backend-health-info-consumer" });
 
 module.exports = consumer;
+////its been setup correctly
