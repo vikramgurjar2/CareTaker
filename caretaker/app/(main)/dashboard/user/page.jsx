@@ -3,13 +3,11 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 import { Montserrat } from "next/font/google";
-
 import { registerables, Chart } from "chart.js";
 import { Line } from "react-chartjs-2";
 Chart.register(...registerables);
 
 import { data1, data2, data3, data4 } from "@/constants/graphdata";
-
 import { FileClock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -22,7 +20,16 @@ import {
 import { getUser } from "@/actions/user/auth";
 
 const Graph = ({ data }) => {
-  return <Line className="w-ful rounded-lg" data={data} />;
+  return (
+    <Line
+      className="w-full rounded-lg"
+      data={data}
+      options={{
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+      }}
+    />
+  );
 };
 
 const montserrat = Montserrat({
@@ -36,7 +43,7 @@ const boxs = [
     condition: "Above norm",
     value: "120/89",
     measurement: "mmHg",
-    graph: <Graph data={data1} />, // Placeholder for graph component
+    graph: <Graph data={data1} />,
     color: "text-violet-500",
   },
   {
@@ -44,7 +51,7 @@ const boxs = [
     condition: "In the norm",
     value: "120",
     measurement: "beats per minute",
-    graph: <Graph data={data2} />, // Placeholder for graph component
+    graph: <Graph data={data2} />,
     color: "text-orange-500",
   },
   {
@@ -52,7 +59,7 @@ const boxs = [
     condition: "Normal",
     value: "100",
     measurement: "mg/dL",
-    graph: <Graph data={data3} />, // Placeholder for graph component
+    graph: <Graph data={data3} />,
     color: "text-orange-500",
   },
   {
@@ -60,7 +67,7 @@ const boxs = [
     condition: "Above norm",
     value: "200",
     measurement: "mg/dL",
-    graph: <Graph data={data4} />, // Placeholder for graph component
+    graph: <Graph data={data4} />,
     color: "text-violet-500",
   },
 ];
@@ -73,7 +80,6 @@ const page = () => {
     const getUserData = async () => {
       const response = await getUser();
       if (response) {
-        console.log(response.user);
         setUser(response.user);
         setLoading(false);
       }
@@ -84,81 +90,75 @@ const page = () => {
   return (
     <>
       {loading ? (
-        <div className="text-center mt-[2rem]">Loading...</div>
+        <div className="text-center mt-8 text-lg text-indigo-500 min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
       ) : (
-        <div className=" bg-blue-50 h-screen w-[85vw] flex overflow-auto">
-          <div className="p-5 h-full w-1/5 text-wrap">
-            <div className=" h-fit  bg-white rounded-lg">
-              <h4 className="text-black-300 text-xl font-bold flex justify-center items-center pt-3">
+        <div className="min-h-screen bg-gradient-to-tr from-blue-50 via-teal-50 to-violet-100 flex flex-col md:flex-row items-stretch">
+          {/* Profile Panel */}
+          <aside className="w-full md:w-1/4 lg:w-1/5 p-4 md:py-10 flex-shrink-0 flex justify-center md:justify-start">
+            <div className="bg-white/90 rounded-2xl m-auto shadow-md max-w-xs w-full px-4 py-6 md:sticky md:top-10">
+              <h4 className="text-gray-800 text-2xl font-bold text-center mb-2">
                 Profile
               </h4>
-
-              <div className="flex flex-col justify-center items-center p-2">
+              <div className="flex flex-col items-center gap-2">
                 <img
-                  className=" object-cover overflow-hidden h-50 w-50 bg-green-400 m-5 rounded-md"
+                  className="object-cover h-24 w-24 bg-green-400 rounded-full shadow mb-2 border-4 border-blue-200"
                   src={user.profile_pic}
                   alt="patient photo"
                 />
-                <h5 className="text-xl font-bold ">{user.name}</h5>
-
-                <div className="px-3 py-2 flex-1">
-                  <Link
-                    href="/history"
-                    className="flex items-center  m-3 justify-center"
-                  >
-                    <div className="flex items-center flex-1 text-emerald-500 font-bold ">
-                      <FileClock
-                        className={cn("h-5 w-5 mr-1 text-emerald-500")}
-                      />
-                      Patient History
-                    </div>
-                  </Link>
-                </div>
+                <h5 className="text-lg font-bold text-neutral-800">
+                  {user.name}
+                </h5>
+                <Link
+                  href="/history"
+                  className="flex items-center text-emerald-500 font-bold hover:underline mt-1"
+                >
+                  <FileClock className={cn("h-5 w-5 mr-1 text-emerald-500")} />
+                  Patient History
+                </Link>
               </div>
               {user?.country && (
-                <div className="flex justify-start pl-3 flex-col flex-1">
-                  <div className="pt-3">
-                    <div className="text-sm">Country:</div>
-                    <div className=" font-bold text-xl pt-2">
-                      {user.country}
-                    </div>
+                <div className="mt-6 space-y-2 text-sm md:text-base">
+                  <div>
+                    <span className="text-gray-500">Country:</span>
+                    <div className="font-bold text-lg">{user.country}</div>
                   </div>
-                  <div className="pt-3">
-                    <div className="text-sm">Gender:</div>
-                    <div className=" font-bold text-xl pt-2">{user.gender}</div>
+                  <div>
+                    <span className="text-gray-500">Gender:</span>
+                    <div className="font-bold text-lg">{user.gender}</div>
                   </div>
-                  <div className="pt-3">
-                    <div className="text-sm">Height:</div>
-                    <div className=" font-bold text-xl pt-2">
-                      {user.height} cm
-                    </div>
+                  <div>
+                    <span className="text-gray-500">Height:</span>
+                    <div className="font-bold text-lg">{user.height} cm</div>
                   </div>
-                  <div className="pt-3">
-                    <div className="text-sm">Weight:</div>
-                    <div className=" font-bold text-xl pt-2">
-                      {user.weight} kg
-                    </div>
+                  <div>
+                    <span className="text-gray-500">Weight:</span>
+                    <div className="font-bold text-lg">{user.weight} kg</div>
                   </div>
-                  <div className="pt-3">
-                    <div className="text-sm">Blood Group:</div>
-                    <div className=" font-bold text-xl pt-2">
-                      {user.bloodGroup}
-                    </div>
+                  <div>
+                    <span className="text-gray-500">Blood Group:</span>
+                    <div className="font-bold text-lg">{user.bloodGroup}</div>
                   </div>
                 </div>
               )}
             </div>
-          </div>
-          <div className="h-full w-4/5 p-5 pl-2 ">
-            <div className=" bg-white h-full rounded-lg p-14">
-              <div className="grid grid-cols-2 grid-rows-2  mt-5 gap-10">
-                {boxs.map((box) => (
-                  <Card>
+          </aside>
+
+          {/* Dashboard Cards */}
+          <main className="flex-1 p-2 md:p-10 flex">
+            <div className="w-full bg-white/95 rounded-2xl shadow-md p-3 md:p-6 flex flex-col justify-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10">
+                {boxs.map((box, i) => (
+                  <Card
+                    key={box.heading + i}
+                    className="flex flex-col min-h-[290px] shadow hover:shadow-lg transition rounded-xl relative bg-gradient-to-tr from-white via-blue-50 to-violet-50"
+                  >
                     <CardHeader className="flex justify-between flex-row">
                       <div>
                         <CardTitle
                           className={cn(
-                            "text-2xl font-bold",
+                            "text-xl sm:text-2xl font-bold",
                             montserrat.className
                           )}
                         >
@@ -166,7 +166,7 @@ const page = () => {
                         </CardTitle>
                         <CardDescription
                           className={cn(
-                            "text-xl font-semibold ",
+                            "text-md sm:text-xl font-semibold mt-1",
                             montserrat.className
                           )}
                         >
@@ -174,20 +174,20 @@ const page = () => {
                         </CardDescription>
                       </div>
                       <div>
-                        <CardTitle className="p-2">
+                        <CardTitle className="p-2 flex flex-col items-end">
                           <span
-                            className={
-                              (cn("text-2xl font-bold", montserrat.className),
-                              cn("h-5 w-5 mr-3", box.color))
-                            }
+                            className={cn(
+                              "text-xl sm:text-2xl font-bold",
+                              montserrat.className,
+                              box.color
+                            )}
                           >
                             {box.value}
                           </span>
                           <span
                             className={cn(
-                              "text-xl font-semibold",
-                              montserrat.className,
-                              "pl-2"
+                              "text-sm sm:text-lg font-semibold mt-1",
+                              montserrat.className
                             )}
                           >
                             {box.measurement}
@@ -195,12 +195,14 @@ const page = () => {
                         </CardTitle>
                       </div>
                     </CardHeader>
-                    <CardContent className="w-full">{box.graph}</CardContent>
+                    <CardContent className="w-full flex-1 min-h-[150px]">
+                      {box.graph}
+                    </CardContent>
                   </Card>
                 ))}
               </div>
             </div>
-          </div>
+          </main>
         </div>
       )}
     </>
