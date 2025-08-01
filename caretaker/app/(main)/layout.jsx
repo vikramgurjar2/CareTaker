@@ -3,11 +3,14 @@ import Navbar from "@/components/navbar";
 
 export default function MainLayout({ children }) {
   return (
-    <div className="flex flex-row h-[100vh] w-[100vw]">
-      <div className="hidden md:flex md:flex-col lg:w-[15vw] md:w-[15vw] md:insert-y-0 bg-gray-900">
+    <div className="flex h-screen w-screen">
+      {/* Sidebar */}
+      <aside className="hidden md:flex flex-col w-60 bg-gray-900 overflow-y-auto">
         <Sidebar />
-      </div>
-      <main className="md:w-[85vw] h-[100%]">
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 h-full overflow-y-auto">
         <Navbar />
         {children}
       </main>

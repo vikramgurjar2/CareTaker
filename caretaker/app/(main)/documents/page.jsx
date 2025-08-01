@@ -5,7 +5,7 @@ import axios from "axios";
 const base_url = "http://localhost:4000";
 
 import React, { useEffect, useState } from "react";
-import NoteAddIcon from "@material-ui/icons/NoteAdd";
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 // import useLocalStorage from "react-use-localstorage";
 import Image from "next/image";

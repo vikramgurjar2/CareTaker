@@ -279,6 +279,7 @@ const SignUpPage = () => {
 
   const handleSubmit = async () => {
     try {
+      console.log("Submitting signup form...");
       setLoading(true);
       if (
         !username ||
@@ -372,12 +373,55 @@ const SignUpPage = () => {
   };
 
   const onUploadSuccessHandler = (result) => {
+    if (!result?.info?.secure_url) {
+      toast.error("Image upload failed. Please try again.");
+      return;
+    }
     setImage(() => ({
       publicId: result?.info?.public_id,
       width: result?.info?.width,
       height: result?.info?.height,
       secureURL: result?.info?.secure_url,
     }));
+    console.log("Image uploaded successfully:", result?.info?.secure_url);
+  };
+
+  const [uploading, setUploading] = useState(false);
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    setUploading(true);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "jsm_caretakr");
+
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dcnpnyqvb/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await res.json();
+      if (data.secure_url) {
+        setImage({
+          publicId: data.public_id,
+          width: data.width,
+          height: data.height,
+          secureURL: data.secure_url,
+        });
+        toast.success("Image uploaded successfully!");
+      } else {
+        throw new Error("Upload failed");
+      }
+    } catch (err) {
+      toast.error("Image upload failed. Try again.");
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -581,6 +625,56 @@ const SignUpPage = () => {
             </h3>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
               {!image.publicId ? (
+                <>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                    id="profile-upload"
+                    disabled={uploading}
+                  />
+                  <label htmlFor="profile-upload" className="cursor-pointer">
+                    <InsertPhotoOutlinedIcon className="mx-auto h-12 w-12 text-gray-400" />
+                    <p className="mt-2">Click to upload your profile picture</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      PNG, JPG up to 10MB
+                    </p>
+                  </label>
+                  {uploading && (
+                    <div className="mt-2 text-blue-600">Uploading...</div>
+                  )}
+                </>
+              ) : (
+                <div className="text-center">
+                  <img
+                    src={image.secureURL}
+                    alt="Profile picture"
+                    className="mx-auto rounded-lg w-32 h-32 object-cover"
+                  />
+                  <p className="text-sm text-green-600 mt-2">
+                    ✓ Image uploaded successfully
+                  </p>
+                  <button
+                    onClick={() =>
+                      setImage({
+                        publicId: "",
+                        width: 0,
+                        height: 0,
+                        secureURL: "",
+                      })
+                    }
+                    className="text-xs text-red-500 mt-1 hover:underline"
+                  >
+                    Remove image
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+
+              {!image.publicId ? (
                 <CldUploadWidget
                   uploadPreset="jsm_caretakr"
                   onSuccess={onUploadSuccessHandler}
@@ -618,7 +712,8 @@ const SignUpPage = () => {
                   </p>
                 </div>
               )}
-            </div>
+            
+            </div> */}
           </div>
 
           {/* Submit Button */}
