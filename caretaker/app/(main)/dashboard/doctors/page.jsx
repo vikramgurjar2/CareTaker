@@ -1,11 +1,10 @@
 import Link from "next/link";
 import React from "react";
-// import doc1 from '.@public/doc-1.jpg'
 
 const Doctors = [
   {
     id: "1",
-    img: '/doc-8.jpg',
+    img: "/doc-8.jpg",
     spec: "Dentist",
     name: "Dr. Jane Cooper",
     exp: "12+ Years",
@@ -162,43 +161,58 @@ const Doctors = [
     name: "Dr. Matthew Taylor",
     exp: "18 Years",
     add: "701 Pine Street, Pinecrest",
-  }
+  },
 ];
 
+// Doctor Card
+const DocCard = (props) => (
+  <div
+    className="w-full bg-white rounded-2xl hover:shadow-xl p-4 flex flex-col items-center 
+                  hover:scale-105 transition-transform duration-300 cursor-pointer shadow
+                  border border-blue-100"
+  >
+    <img
+      className="object-cover object-top h-48 w-full rounded-xl mb-4 bg-indigo-100"
+      src={props.img}
+      alt={props.name}
+    />
+    <span className="inline-block bg-blue-100 rounded-full px-3 py-1 text-xs font-semibold text-blue-700 uppercase tracking-wide mb-2">
+      {props.spec}
+    </span>
+    <h4 className="mb-1 font-bold text-indigo-900 text-lg md:text-xl text-center">
+      {props.name}
+    </h4>
+    <span className="text-sky-500 font-semibold mb-1">{props.exp}</span>
+    <p className="mt-1 text-gray-600 text-xs text-center">{props.add}</p>
+    <Link href={`/conversations/${props.name}`}>
+      <button
+        className="w-full h-9 mt-4 text-sm rounded-xl bg-gradient-to-tr from-sky-400 via-blue-500 to-indigo-500 text-white font-bold shadow 
+                        hover:from-pink-500 hover:to-orange-400 transition-colors flex items-center justify-center"
+      >
+        Book Now
+      </button>
+    </Link>
+  </div>
+);
 
-const DocCard = (props)=>{
-  return(
-    <div className="w-full h-fit bg-white rounded-[0.4rem] hover:shadow p-[1rem] hover:scale-105 transition duration-300 cursor-pointer">
-      <img className=" overflow-hidden object-cover object-top h-[18rem] w-full rounded-[0.3rem] mb-[1rem]" src={props.img} alt="" />
-      <span className=" inline-block bg-blue-200 rounded-full px-3 py-1 text-sm font-semibold text-blue-700 mr-2 mb-2" >{props.spec}</span>
-      <h4 className="mb-2 font-bold text-black text-2xl">{props.name}</h4>
-      <span className="text-blue-400 text-md">{props.exp}</span>
-      <p className="mt-2">{props.add}</p>
-      <Link href={`/conversations/${props.name}`}>
-      <button className="w-full h-[2rem] border-2 border-blue-400 rounded-xl text-blue-400 text-center mt-4">Book Now</button>
-      </Link>
-    </div>
-  )
-}
 const page = () => {
   return (
-    <div className="bg-blue-50 h-screen w-full overflow-auto p-5">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4 p-[2rem]">
-      {
-        Doctors.map((doctor)=>(
-          <DocCard 
-          key={doctor.id}
-          img = {doctor.img}
-          spec={doctor.spec}
-          name={doctor.name}
-          exp = {doctor.exp}
-          add = {doctor.add}
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-100 p-6">
+      <h2 className="text-2xl md:text-3xl font-bold text-center text-indigo-900 mb-8">
+        Top Doctors
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        {Doctors.map((doctor) => (
+          <DocCard
+            key={doctor.id}
+            img={doctor.img}
+            spec={doctor.spec}
+            name={doctor.name}
+            exp={doctor.exp}
+            add={doctor.add}
           />
-        ))
-      }
-
+        ))}
       </div>
-     
     </div>
   );
 };
