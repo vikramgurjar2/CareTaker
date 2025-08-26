@@ -35,11 +35,12 @@ The project contains the following folders and services
 
     - ```backend``` PORT, DATABASE_URL, JWT_SECRET, JWT_EXPIRE, COOKIE_EXPIRE, KAFKA_BROKER, KAFKA_USERNAME, KAFKA_PASSWORD, CLICKHOUSE_HOST, CLICKHOUSE_DATABASE, CLICKHOUSE_USERNAME, CLICKHOUSE_PASSWORD
 
-    - ```fit-band-server``` KAFKA_BROKER, KAFKA_USERNAME, KAFKA_PASSWORD
+    - ```fit-band-server``` KAFKA_BROKER, KAFKA_USERNAME, KAFKA_PASSWORD 
 
 3. Include *kafka.pem* file in backend and fit-band-server.
 4. make sure to install the required dependencies
 6. Run ```npm run dev``` in all 3 services i.e. caretaker, backend, and fit-band-server (make sure to have nodmeon in both backend and fit-band-server - ```npm install --save-dev nodemon```)
+7. can also setup the docker-container for it, if its becoming complicated
 
 At this point following service would be up and running: 
 |Service|PORT|
