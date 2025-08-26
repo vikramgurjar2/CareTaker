@@ -29,7 +29,7 @@ The project contains the following folders and services
 
 
 ## Setup Guide
-1. Run ```npm install``` in all 3 services i.e. caretaker, backend, and fit-band-server.
+1. Run ```npm install``` in all 3 services i.e. caretaker, backend, and fit-band-server
 2. Make .env file in all 3 services and include all the environment variables.
     - ```caretaker``` OPENAI_API_KEY, NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, OAUTH_CLIENT_ID
 
